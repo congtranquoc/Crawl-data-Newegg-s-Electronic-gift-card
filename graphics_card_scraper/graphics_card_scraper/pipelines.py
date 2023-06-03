@@ -1,6 +1,7 @@
 from itemadapter import ItemAdapter
 import csv
 import json
+import os
 import mysql.connector
 from mysql.connector import Error
 
@@ -13,7 +14,7 @@ class GraphicsCardScraperPipeline:
         self.conn = mysql.connector.connect(
             host='localhost',
             user='root',
-            password='Ryantran@7',
+            password=os.getenv('DB_PASSWORD'),
             database='newegg_db'
         )
         self.curr = self.conn.cursor()
@@ -90,4 +91,9 @@ class GraphicsCardScraperPipeline:
                 return float(price_str)
         except ValueError:
                 return 0.0
+            
+    def close_spider(self, spider):
+        self.curr.close()
+        self.conn.close()
+        
         

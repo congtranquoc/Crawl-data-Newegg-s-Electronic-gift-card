@@ -17,9 +17,8 @@ class NeweggGraphicsCardSpiderSpider(scrapy.Spider):
                 rating_count = int(rating_count.strip('()'))
                 
             rating_num = product.xpath('.//a[contains(@class, "item-rating")]/@title').get()
-            print(rating_num)
             if rating_num:
-                rating = re.search(r"(\d+(\.\d+)?)", rating_num).group(1) if rating_num else None
+                rating = re.search(r"(\d+(\.\d+)?)", rating_num).group(1)
             else:
                 rating = None
             branding = product.css('.item-brand img::attr(title)').get()
